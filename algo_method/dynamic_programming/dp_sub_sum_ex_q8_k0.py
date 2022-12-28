@@ -1,5 +1,5 @@
 # Author: algo-method + kei
-# Date: December 27, 2022
+# Date: December 28, 2022
 from typing import *
 from helper_classes import *
 from collections import defaultdict, deque
@@ -13,86 +13,49 @@ import unittest
 
 class Solution:
     '''
-    TODO:
     '''
 
     def solve(self):
-        M, N = map(int, input().split())
-        A = [list(map(int, input().split())) for _ in range(M)]
+        N, K = map(int, input().split())
+        A = list(map(int, input().split()))
 
         INF = float('inf')
-        dp = [[INF for _ in range(1 << M)] for _ in range(N+1)]
+        # dp[i][k]: Max sum of the first i elements when deleting k elements to the left of
+        #           A[i] inclusive.
+        dp = [[-INF for _ in range(K+1)] for _ in range(N)]
+        dp[0][0] = A[0]
+        dp[0][1] = 0
+        for i in range(1, N):
+            # Case 1: Not delete A[i] (Use A[i])
+            # Take max of not deleting A[i-1] or deleting K elements to the left of
+            # A[i-1] inclusive.
+            # Store the max sum from not deleting K elemes at i-1 or deleting K elems at i-1,
+            # plus A[i]
+            dp[i][0] = max(dp[i-1][0], dp[i-1][K]) + A[i]
 
-        # 0 ~ 2^M-1 の塗り方のうち、条件を満たさない塗り方をあらかじめ調べておく
-        is_ban = [False for _ in range(1 << M)]
-        for bit in range(1 << M):
-            for i in range(M-1):
-                if (bit & 1 << i) == 0 and (bit & 1 << (i+1)) == 0:
-                    is_ban[bit] = True
+            # Case 2: Delete A[i] (Not use A[i])
+            # Store the result when deleting k (1 <= k <= K) elements to the left of A[i].
+            for k in range(1, K+1):
+                # Delete k elements to the left of A[i]
+                # dp[i-1] has already the info. Use it.
+                dp[i][k] = dp[i-1][k-1]
 
-        # i 行目を塗り方 p で塗るときの、黒マスに書かれた総和
-        sum_Acol = [[0 for _ in range(1 << M)] for _ in range(N)]
-        for i in range(N):
-            for p in range(1 << M):
-                tmp = 0
-                for j in range(M):
-                    if p & 1 << j:
-                        tmp += A[j][i]
-                sum_Acol[i][p] = tmp
+                # Store the max sum from not deleting K elemes at i-1 or deleting K elems at i-1.
+                if k == K:
+                    dp[i][k] = max(dp[i-1][k-1], dp[i-1][k])
 
-        # DP 初期条件
-        full = (1 << M) - 1   # M 行すべて黒く塗るときの塗り方に対応する番号
-        dp[0][full] = 0
-
-        # DP テーブルの更新
-        for i in range(0, N):
-            for p in range(1 << M):
-                # i 行目の塗り方 p が条件に反する塗り方ならば、スキップ
-                if is_ban[p]:
-                    continue
-
-                # i-1 行目の塗り方 bit1 が条件に反する塗り方ならば、スキップ
-                for bit1 in range(1 << M):
-                    if is_ban[bit1]:
-                        continue
-
-                    # p OR bit1 が 11…1 ならば、dp[i][p] を更新する
-                    if bit1 | p == full:
-                        dp[i+1][p] = min(dp[i+1][p], dp[i][bit1] + sum_Acol[i][p])
-
-        # 答えを出力する
-        ans = min(dp[N])
+        ans = max(dp[N-1][0], dp[N-1][K])
         print(ans)
 
 
 class Try:
-    '''
-    WA
-    '''
 
     def solve(self):
-        M, N = map(int, input().split())
-        grid = [list(map(int, input().split())) for _ in range(M)]
-
-        INF = float('inf')
-        # dp[i][j][p]: min points at (i, j) with paint(p=1) or not paint(p=0)
-        dp = [[[INF] * 2 for _ in range(N)] for _ in range(M)]
-        dp[0][0][0] = INF
-        dp[0][0][1] = grid[0][0]
-        for i in range(M):
-            for j in range(N):
-                if i == 0 and j == 0:
-                    continue
-                if i - 1 >= 0:
-                    dp[i][j][0] = min(dp[i][j][0], dp[i-1][j][1])
-                    dp[i][j][1] = min(dp[i][j][1], dp[i-1][j][1], dp[i-1][j][0])
-                if j - 1 >= 0:
-                    dp[i][j][0] = min(dp[i][j][0], dp[i][j-1][1])
-                    dp[i][j][1] = min(dp[i][j][1], dp[i][j-1][1], dp[i][j-1][0])
-
-                dp[i][j][1] += grid[i][j]
-
-        print(min(dp[M-1][N-1][0], dp[M-1][N-1][1]))
+        S = input()
+        N = int(input())
+        N, M = map(int, input().split())
+        A = list(map(int, input().split()))
+        print()
 
 
 class Bot:
