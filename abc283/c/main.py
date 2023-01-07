@@ -8,12 +8,12 @@ from collections import *
 
 class Solution:
     '''
-    Author:  + kei
+    Author: kaz_mighty + kei
     '''
 
     def solve(self):
-
-        print()
+        s = input()
+        print(len(s) - s.count('00'))
 
 
 class Try:

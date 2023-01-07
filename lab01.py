@@ -6,12 +6,9 @@ from pprint import pprint
 def main():
     # experiment code
 
-    a = [1, 2, 3]
-    b = [3, 2, 1]
-    p = []
-    for a, b in zip(a, b):
-        p.append([a, b])
-    pprint(p)
+    a = 'abbbb'
+    b = 'bb'
+    pprint(a.count(b))
 
     # done
     print('done')
