@@ -4,22 +4,42 @@ from collections import defaultdict
 MOD = 998244353
 
 
-def extgcd(a, b):
-    if b == 0:
-        return (a, 1, 0)
-    g, x, y = extgcd(b, a % b)
-    return (g, y, x - a // b * y)
+class NoSolution(ArithmeticError):
+    pass
 
 
-def modinv(a, mod):
-    return extgcd(a, mod)[1]
+def extra_gcd(a, b):
+    '''
+    ax + by = gcd(a, b) = z
+    '''
+    z1, z2 = a, b
+    x1, y1 = 1, 0
+    x2, y2 = 0, 1
+    while z2:
+        t = z1 // z2
+        z1 -= t * z2
+        x1 -= t * x2
+        y1 -= t * y2
+        z1, z2 = z2, z1
+        x1, x2 = x2, x1
+        y1, y2 = y2, y1
+    x1 = x1 % (b // z1)
+    y1 = (z1 - a * x1) // b
+    return x1, y1, z1
 
 
-# 1 / M
-M = 10
-minv = modinv(M, MOD)
-ans = 2 ** 30
-ans = (ans * minv) % MOD
+def mod_div(a, b, n):
+    x, y, gcd = extra_gcd(b, n)
+    if gcd == 1:
+        return a * x % n
+    elif a % gcd == 0:
+        return x * (a // gcd) % (n // gcd)
+    else:
+        raise NoSolution("{} / {} (mod {})".format(a, b, n))
+
+
+# 1 / 100
+MINV = mod_div(1, 100, MOD)
 
 
 class UnionFind():
