@@ -31,15 +31,13 @@ class Solution:
                 if dp[i][k] == 0:
                     continue
                 # Not use S[i]
-                dp[i+1][k] += dp[i][k]
-                dp[i+1][k] %= MOD
+                dp[i+1][k] += dp[i][k] % MOD
                 # Use S[i]
                 nk = (k * 10 + d) % K
-                dp[i+1][nk] += dp[i][k]
-                dp[i+1][nk] %= MOD
+                dp[i+1][nk] += dp[i][k] % MOD
 
         # After N choice, return the num of ways to select digits whose remainder is
-        # k when divided by K.
+        # k when divided by K. Subtract 1 for the case where all chars are deleted.
         ans = (dp[N][0] - 1) % MOD
         print(ans)
 

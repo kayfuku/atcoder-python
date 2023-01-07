@@ -9,7 +9,32 @@ from collections import *
 
 class Solution:
 
-    def solve(self):
+    def solve():
+        '''
+        Author: tk727 + kei
+        '''
+        N, K, D = map(int, input().split())
+        A = list(map(int, input().split()))
+        # dp[i][j][r]: max sum of nums of j selected nums from the first i nums where
+        # the remainder of the sum is r when divided by D.
+        dp = [[[-1] * D for _ in range(K+1)] for _ in range(N+1)]
+        # max sum defaults to 0 when no num is selected.
+        dp[0][0][0] = 0
+        for i in range(N):
+            for j in range(K+1):
+                for r in range(D):
+                    if dp[i][j][r] == -1:
+                        continue
+                    # Not use A[i]
+                    dp[i+1][j][r] = max(dp[i+1][j][r], dp[i][j][r])
+                    # Use A[i]
+                    if j + 1 <= K:
+                        nr = (r + A[i]) % D
+                        dp[i+1][j+1][nr] = max(dp[i+1][j+1][nr], dp[i][j][r] + A[i])
+
+        print(dp[N][K][0])
+
+    def solve2(self):
         '''
         Author: atcoder + kei
         '''
@@ -39,7 +64,7 @@ class Solution:
         # print(dp)
         print(dp[N][K][0])
 
-    def solve2(self):
+    def solve3(self):
         '''
         Author: Kiri8128 + kei
         '''
@@ -61,15 +86,15 @@ class Solution:
 
 
 class Try:
-    '''
-    TLE
-    Author: kei
-    '''
 
     def __init__(self):
         pass
 
     def solve(self):
+        '''
+        TLE
+        Author: kei
+        '''
         N, K, D = map(int, input().split())
         A = list(map(int, input().split()))
 

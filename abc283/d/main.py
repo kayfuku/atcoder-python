@@ -18,7 +18,8 @@ class Solution:
         stack = [set()]
         for si in s:
             if si == '(':
-                stack.append(stack[-1].copy())
+                # stack.append(stack[-1].copy())
+                stack.append(set())
             elif si == ')':
                 stack.pop()
             else:
