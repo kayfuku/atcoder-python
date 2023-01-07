@@ -6,9 +6,10 @@ from pprint import pprint
 def main():
     # experiment code
 
-    a = 'abbbb'
-    b = 'bb'
-    pprint(a.count(b))
+    a = [1, 2, 3]
+    b = [1]
+    for ai, bi in zip(a, b):
+        print(ai, bi)
 
     # done
     print('done')
