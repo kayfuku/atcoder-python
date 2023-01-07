@@ -39,11 +39,11 @@ class Try:
 
 
 def main():
-    t = Try()
-    t.solve()
+    # t = Try()
+    # t.solve()
 
-    # s = Solution()
-    # s.solve()
+    s = Solution()
+    s.solve()
 
 
 if __name__ == '__main__':

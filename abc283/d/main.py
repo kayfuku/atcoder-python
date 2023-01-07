@@ -10,12 +10,23 @@ import bisect
 
 class Solution:
     '''
-    Author:  + kei
+    Author: kaz_mighty + kei
     '''
 
     def solve(self):
-
-        print()
+        s = input()
+        stack = [set()]
+        for si in s:
+            if si == '(':
+                stack.append(stack[-1].copy())
+            elif si == ')':
+                stack.pop()
+            else:
+                if si in stack[-1]:
+                    print('No')
+                    return
+                stack[-1].add(si)
+        print('Yes')
 
 
 class Try:
@@ -50,11 +61,11 @@ class Try:
 
 
 def main():
-    t = Try()
-    t.solve()
+    # t = Try()
+    # t.solve()
 
-    # s = Solution()
-    # s.solve()
+    s = Solution()
+    s.solve()
 
 
 if __name__ == '__main__':
