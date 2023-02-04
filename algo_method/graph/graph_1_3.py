@@ -24,6 +24,7 @@ class Solution:
             g[Bi].append(Ai)
 
         x, max_num = -1, -1
+        # iterate from small num to large num
         for v in range(N):
             num = len(g[v])
             if max_num < num:
