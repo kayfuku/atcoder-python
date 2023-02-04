@@ -16,22 +16,22 @@ class Solution:
     '''
 
     def solve(self):
-        N, M = map(int, input().split())
-        g = defaultdict(list)
+        N, M, X = map(int, input().split())
+        g = defaultdict(set)
         for i in range(M):
-            Ai, Bi = map(int, input().split())
-            g[Ai].append(Bi)
-            g[Bi].append(Ai)
+            A, B = map(int, input().split())
+            g[A].add(B)
+            g[B].add(A)
 
-        x, max_num = -1, -1
-        for v in range(N):
-            num = len(g[v])
-            if max_num < num:
-                max_num = num
-                x = v
+        result = set()
+        for u in g[X]:
+            for v in g[u]:
+                # exclude X itself and friend of X
+                # Note that it's not 'v not in g[X]'
+                if v != X and not v in g[X]:
+                    result.add(v)
 
-        g[x].sort()
-        print(*g[x])
+        print(len(result))
 
 
 class Try:
