@@ -1,5 +1,5 @@
 # Author: algo-method + kei
-# Date: February ?, 2023
+# Date: February 4, 2023
 from typing import *
 from helper_classes import *
 from collections import defaultdict, deque
@@ -22,11 +22,19 @@ class Solution:
 class Try:
 
     def solve(self):
-        S = input()
-        N = int(input())
-        N, M = map(int, input().split())
-        A = list(map(int, input().split()))
-        print()
+        N, A, B = map(int, input().split())
+        g = defaultdict(set)
+        for i in range(N):
+            Si = input()
+            for j, sj in enumerate(Si):
+                if sj == 'o':
+                    g[i].add(j)
+
+        if B in g[A]:
+            print('Yes')
+            return
+
+        print('No')
 
 
 class Bot:
