@@ -14,7 +14,7 @@ def main():
     # done
     print('done')
     # oj t -c "python main.py"
-    # sublime `acc config-dir`/python/main.py
+    # code `acc config-dir`/python/main.py
 
 
 if __name__ == '__main__':
