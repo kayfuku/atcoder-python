@@ -6,10 +6,9 @@ from pprint import pprint
 def main():
     # experiment code
 
-    a = [1, 2, 3]
-    b = [1]
-    for ai, bi in zip(a, b):
-        print(ai, bi)
+    if "True":
+        print("Yes")
+    print("No")
 
     # done
     print('done')

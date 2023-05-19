@@ -1,5 +1,5 @@
 # Author: algo-method + kei
-# Date: May ?, 2023
+# Date: February ?, 2023
 from typing import *
 from helper_classes import *
 from collections import defaultdict, deque
@@ -16,7 +16,9 @@ class Solution:
     '''
 
     def solve(self):
-        print()
+        if "True":
+            print("Yes")
+        print("No")
 
 
 class Try:
