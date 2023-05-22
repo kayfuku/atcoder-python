@@ -42,12 +42,9 @@ class Try:
         pass
 
     def solve(self):
-        from sys import stdin
-        input = stdin.readline
-
         H, W = map(int, input().split())
-        S = [input()[:-1] for _ in range(H)]
-        T = [input()[:-1] for _ in range(H)]
+        S = [input() for _ in range(H)]
+        T = [input() for _ in range(H)]
         for i in range(H):
             cnt_s = Counter(S[i])
             cnt_t = Counter(T[i])

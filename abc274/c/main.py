@@ -4,6 +4,7 @@
 
 # from helper_classes import *
 from collections import *
+import numpy as np
 
 
 class Solution:
@@ -14,13 +15,13 @@ class Solution:
     def solve(self):
         N = int(input())
         A = list(map(int, input().split()))
-        gen = [0] * (2 * N + 2)
-        for i, a in enumerate(A):
-            gen[2*i] = gen[a] + 1
-            gen[2*i+1] = gen[a] + 1
 
-        for g in range(1, len(gen)):
-            print(g)
+        ans = [0] * (2*N+1)
+        for i, a in enumerate(A):
+            ans[2*i+1] = ans[a-1]+1
+            ans[2*i+2] = ans[a-1]+1
+
+        print(*ans, sep="\n")
 
 
 class Try:
@@ -36,11 +37,11 @@ class Try:
 
 
 def main():
-    t = Try()
-    t.solve()
+    # t = Try()
+    # t.solve()
 
-    # s = Solution()
-    # s.solve()
+    s = Solution()
+    s.solve()
 
 
 if __name__ == '__main__':

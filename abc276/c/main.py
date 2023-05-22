@@ -8,6 +8,7 @@ input = sys.stdin.readline
 
 def solve1():
     '''
+    Not very good solution.
     # Author: tk727 + kei
     # Date: November 19, 2022
     '''
@@ -35,28 +36,31 @@ def solve1():
 
 def solve2():
     '''
+    Better solution.
     # Author: KoD + kei
     # Date: November 19, 2022
     '''
     N = int(input())
     P = list(map(int, input().split()))
 
-    # Find the first index from the LSD where the value is in non-increasing order to the right.
+    # 1. Find the first index from the LSD where the value is in non-increasing order to the right.
     j = N - 2
     while P[j] < P[j + 1]:
         j -= 1
     # Assert that P[j + 1:] is sorted in increasing order.
 
-    # Find the first index from the LSD where the value is smaller than Pj.
+    # 2. Find the first index from the LSD where the value is smaller than Pj.
     k = N - 1
     while P[j] < P[k]:
         k -= 1
 
-    # Swap.
+    # 3. Swap.
     P[j], P[k] = P[k], P[j]
-    # Concat the list to the left of Pj including Pj and the reversed list of
-    # the list to the right of Pj.
-    print(*P[:j + 1], *P[:j:-1])
+
+    # 4. Reverse the list to the right of Pj.
+    P[j+1:] = P[:j:-1]
+
+    print(*P)
 
 
 def main():

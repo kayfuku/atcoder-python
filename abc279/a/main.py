@@ -4,8 +4,6 @@
 
 # from helper_classes import *
 from collections import *
-from sys import stdin
-input = stdin.readline
 
 
 class Solution:
@@ -29,8 +27,8 @@ class Try:
     def solve(self):
         S = input()
         ans = 0
-        for i in range(len(S) - 1):
-            if S[i] == 'v':
+        for c in S:
+            if c == 'v':
                 ans += 1
             else:
                 ans += 2
@@ -39,11 +37,11 @@ class Try:
 
 
 def main():
-    # t = Try()
-    # t.solve()
+    t = Try()
+    t.solve()
 
-    s = Solution()
-    s.solve()
+    # s = Solution()
+    # s.solve()
 
 
 if __name__ == '__main__':

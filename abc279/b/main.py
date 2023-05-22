@@ -30,9 +30,7 @@ class Try:
 
     def solve(self):
         S = input()
-        S = S[:-1]
         T = input()
-        T = T[:-1]
         if T in S:
             print('Yes')
         else:

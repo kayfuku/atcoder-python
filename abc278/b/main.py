@@ -11,20 +11,21 @@ input = sys.stdin.readline
 class Solution:
 
     def __init__(self):
-        self.ans = [False] * 1440
+        self.is_confusing = [False] * 60 * 24
         for h in range(24):
             for m in range(60):
-                a = h // 10
-                b = h % 10
-                c = m // 10
-                d = m % 10
-                if 0 <= 10 * a + c < 24 and 0 <= 10 * b + d < 60:
-                    self.ans[60 * h + m] = True
+                h1 = h // 10
+                h2 = h % 10
+                m1 = m // 10
+                m2 = m % 10
+                if 0 <= h1 * 10 + m1 < 24 and 0 <= h2 * 10 + m2 < 60:
+                    self.is_confusing[60 * h + m] = True
 
     def solve(self):
         H, M = map(int, input().split())
-        for k in range(60 * H + M, 2880):
-            if self.ans[k % 1440]:
+        start = 60 * H + M
+        for k in range(start, start + 1440):
+            if self.is_confusing[k % 1440]:
                 print((k % 1440) // 60, (k % 1440) % 60)
                 return
 
@@ -37,20 +38,20 @@ class Try:
         cm = (cm + 1) % 60
         return ch, cm
 
-    def check(self, h, m):
+    def is_confusing(self, h, m):
         h1 = h // 10
         h2 = h % 10
         m1 = m // 10
         m2 = m % 10
-        con_h = int(str(h1) + str(m1))
-        con_m = int(str(h2) + str(m2))
+        con_h = h1 * 10 + m1
+        con_m = h2 * 10 + m2
         return 0 <= con_h <= 23 and 0 <= con_m <= 59
 
     def solve(self):
         H, M = map(int, input().split())
         ch = H
         cm = M
-        while not self.check(ch, cm):
+        while not self.is_confusing(ch, cm):
             ch, cm = self.get_next_time(ch, cm)
 
         print(ch, cm)

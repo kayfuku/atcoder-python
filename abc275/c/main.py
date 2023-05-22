@@ -15,9 +15,9 @@ class Solution:
 
     def solve(self):
         '''
-        Pick up two points and a square is defined.
+        Pick up one vector and a square will be defined.
         Check if the other two points are valid.
-        Author: tk727 + kei
+        Author: kyopro_friends + kei
         '''
         S = [input() for _ in range(9)]
         ans = 0
@@ -31,18 +31,19 @@ class Solution:
                     for j2 in range(9):
                         if S[i2][j2] == "." or (i1, j1) == (i2, j2):
                             continue
-                        # P2 picked up.
+                        # P2 picked up, and P1 -> P2 is a vector.
+                        # Calculate dx and dy.
+                        dx = j2 - j1
+                        dy = i2 - i1
 
-                        # P3 and P4 that make up a square with P1 and P2
-                        dx = i2 - i1
-                        dy = j2 - j1
-                        i3 = i1 + dy
-                        j3 = j1 - dx
-                        i4 = i2 + dy
-                        j4 = j2 - dx
+                        # Find P3 and P4 clockwise that make up a square with P1 and P2.
+                        i3 = i2 + dx
+                        j3 = j2 - dy
+                        i4 = i3 - dy
+                        j4 = j3 - dx
+
                         # Check if P3 and P4 are valid.
-                        if not (0 <= min(i3, i4, j3, j4) and
-                                max(i3, i4, j3, j4) < 9):
+                        if not (0 <= min(i3, i4, j3, j4) and max(i3, i4, j3, j4) < 9):
                             # Out of bound
                             continue
                         if S[i3][j3] == "#" and S[i4][j4] == "#":

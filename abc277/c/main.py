@@ -17,11 +17,11 @@ def main():
 
     # BFS
     q = deque([1])
-    ans = 1
     seen = set([1])
+    max_ = 1
     while q:
         node = q.popleft()
-        ans = max(ans, node)
+        max_ = max(max_, node)
 
         for nei in G[node]:
             if nei in seen:
@@ -29,7 +29,7 @@ def main():
             q.append(nei)
             seen.add(nei)
 
-    print(ans)
+    print(max_)
 
 
 if __name__ == '__main__':

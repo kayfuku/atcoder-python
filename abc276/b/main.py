@@ -9,13 +9,16 @@ input = sys.stdin.readline
 def solve():
     N, M = map(int, input().split())
 
-    g = [[] for _ in range(N + 1)]
+    # graph (adjacency list)
+    g = [[] for _ in range(N+1)]
     for _ in range(M):
         A, B = map(int, input().split())
+        # undirected graph
         g[A].append(B)
         g[B].append(A)
 
-    for i in range(1, N + 1):
+    # node 1 to N
+    for i in range(1, N+1):
         nei = g[i]
         nei.sort()
         print(len(nei), *nei)

@@ -13,9 +13,10 @@ class Solution:
 
     def solve(self):
         H, W = map(int, input().split())
-        g = []
-        for _ in range(H):
-            g.append(input())
+        g = [input() for _ in range(H)]
+        # g = []
+        # for _ in range(H):
+        #     g.append(input())
 
         ans = [0] * W
         for c in range(W):

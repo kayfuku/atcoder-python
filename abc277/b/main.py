@@ -7,7 +7,7 @@ def main():
     set_s = set()
     for i in range(N):
         s = input()
-        if (s[0] not in set_1) or (s[1] not in set_2) or (s in set_s):
+        if (not s[0] in set_1) or (not s[1] in set_2) or (s in set_s):
             print('No')
             return
 
