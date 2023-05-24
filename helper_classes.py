@@ -42,82 +42,115 @@ def mod_div(a, b, n):
 MINV = mod_div(1, 100, MOD)
 
 
-class UnionFind():
+class UnionFind(object):
     '''
-    Union Find
+    Union Find (Disjoint Set with path compression and union by rank)
     n : int, the number of nodes
-    root : list, list of parents.
+    roots : list, list of parents.
         If value is negative, the index is a root node number of a tree/group, and
         the absolute value is the number of nodes in the tree.
     rank : list, height of the tree
     '''
 
     def __init__(self, n):
+        '''
+        O(N) time and space
+        '''
         self.n = n
-        self.root = [-1] * (n + 1)
-        self.rank = [0] * (n + 1)
+        self.roots = [-1] * n
+        self.rank = [0] * n
+        self.num_of_groups = n
 
     def find(self, x):
         '''
-        Find root of node x.
+        Find roots of node x.
+        O(logN) or O(α(N)) time, where N is the number of vertices in the graph.
+        α refers to the Inverse Ackermann function. In practice, we assume
+        it's a constant. In other words, O(α(N)) is regarded as O(1) on average.
         x : int, node number
         '''
-        if (self.root[x] < 0):
+        if (self.roots[x] < 0):
+            # x is a root node.
             return x
+        # Path compression implementation
+        # Note that path compression needs recursion stacks of size O(N).
+        self.roots[x] = self.find(self.roots[x])
+        return self.roots[x]
 
-        self.root[x] = self.find(self.root[x])
-        return self.root[x]
+    def find_without_pc(self, x):
+        '''
+        Find roots of node x.
+        O(logN) time
+        x : int, node number
+        '''
+        if (self.roots[x] < 0):
+            # x is a root node.
+            return x
+        # Without path compression
+        return self.find_without_pc(self.roots[x])
 
     def unite(self, x, y):
         '''
         Unite trees.
+        O(logN) or O(α(N)) time
         x : int, node number in one tree
         y : int, node number in another tree
         '''
-        x = self.find(x)
-        y = self.find(y)
-
-        if (x == y):
-            return
-        elif (self.rank[x] > self.rank[y]):
-            self.root[x] += self.root[y]
-            self.root[y] = x
+        root_x = self.find(x)
+        root_y = self.find(y)
+        if (root_x == root_y):
+            return False
+        # Merge the lower-rank group into the higher-rank group.
+        if (self.rank[root_x] > self.rank[root_y]):
+            # Add the number of nodes in tree root_y to tree root_x.
+            self.roots[root_x] += self.roots[root_y]
+            # Set root_x as a root node of root_y.
+            self.roots[root_y] = root_x
         else:
-            self.root[y] += self.root[x]
-            self.root[x] = y
-            if (self.rank[x] == self.rank[y]):
-                self.rank[y] += 1
+            self.roots[root_y] += self.roots[root_x]
+            self.roots[root_x] = root_y
+            if (self.rank[root_x] == self.rank[root_y]):
+                self.rank[root_y] += 1
 
-    def is_same(self, x, y):
+        self.num_of_groups -= 1
+        return True
+
+    def is_connected(self, x, y):
         '''
-        Check if it's in the same tree.
+        Check if x and y are connected, which means they are in the same tree.
+        O(logN) or O(α(N)) time
         x : int, one node number
         y : int, another node number
         '''
+        # Return True if their root nodes are the same.
         return self.find(x) == self.find(y)
 
     def get_tree_size(self, x):
         '''
         Get the tree size.
+        O(logN) or O(α(N)) time
         x : int, node number
         '''
-        return -self.root[self.find(x)]
+        return -self.roots[self.find(x)]
 
     def get_roots(self):
         '''
         Get a list of the roots.
+        O(N) time
         '''
-        return [i for i, x in enumerate(self.root) if x < 0]
+        return [i for i, x in enumerate(self.roots) if x < 0]
 
-    def get_number_of_group(self):
+    def get_number_of_groups(self):
         '''
         Get the number of trees/groups.
+        O(1) time
         '''
-        return len(self.get_roots())
+        return self.num_of_groups
 
     def get_all_group_members(self):
         '''
         Get all lists of nodes for all trees/groups.
+        O(NlogN) or O(N・α(N)) time
         '''
         # K: root, V: list of nodes
         group_members = defaultdict(list)

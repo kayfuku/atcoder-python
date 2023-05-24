@@ -23,11 +23,7 @@ class Try:
 
     def solve(self):
         N, K = map(int, input().split())
-        h = []
-        for i in range(K):
-            S = input()
-            h.append(S)
-
+        h = [input() for _ in range(K)]
         h.sort()
         for n in h:
             print(n)

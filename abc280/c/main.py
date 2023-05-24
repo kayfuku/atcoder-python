@@ -5,6 +5,7 @@
 # from helper_classes import *
 from collections import *
 import bisect
+from itertools import zip_longest
 
 
 class Solution:
@@ -51,13 +52,22 @@ class Try:
 
         return -1
 
+    def solve2(self):
+        s = input()
+        t = input()
+        for i, (si, ti) in enumerate(zip_longest(s, t)):
+            if si != ti:
+                print(i + 1)
+                break
+
 
 def main():
-    # t = Try()
-    # t.solve()
+    t = Try()
+    t.solve()
+    # t.solve2()
 
-    s = Solution()
-    s.solve()
+    # s = Solution()
+    # s.solve()
 
 
 if __name__ == '__main__':

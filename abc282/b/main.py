@@ -16,13 +16,11 @@ class Solution:
 
     def solve(self):
         N, M = map(int, input().split())
-        p = []
-        for i in range(N):
-            p.append(input())
+        p = [input() for _ in range(N)]
 
         cnt = 0
         for i in range(N):
-            for j in range(i + 1, N):
+            for j in range(i+1, N):
                 for mi in range(M):
                     if p[i][mi] == 'x' and p[j][mi] == 'x':
                         break

@@ -32,19 +32,19 @@ class Try:
 
     def solve(self):
         K = int(input())
-        ans = 'A'
-        for i in range(K - 1):
-            ans += chr(ord('A') + i + 1)
+        ans = []
+        for c in range(ord('A'), ord('A')+K):
+            ans.append(chr(c))
 
-        print(ans)
+        print(''.join(ans))
 
 
 def main():
-    # t = Try()
-    # t.solve()
+    t = Try()
+    t.solve()
 
-    s = Solution()
-    s.solve()
+    # s = Solution()
+    # s.solve()
 
 
 if __name__ == '__main__':

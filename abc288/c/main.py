@@ -2,7 +2,7 @@
 # Author:  + kei
 # Date: February ?, 2023
 
-# from helper_classes import *
+from helper_classes import *
 from collections import *
 
 
@@ -12,8 +12,18 @@ class Solution:
     '''
 
     def solve(self):
-
-        print()
+        N, M = map(int, input().split())
+        uf = UnionFind(N)
+        ans = 0
+        for _ in range(M):
+            A, B = map(int, input().split())
+            A -= 1
+            B -= 1
+            if uf.is_connected(A, B):
+                ans += 1
+            else:
+                uf.unite(A, B)
+                print(ans)
 
 
 class Try:
@@ -48,11 +58,11 @@ class Try:
 
 
 def main():
-    t = Try()
-    t.solve()
+    # t = Try()
+    # t.solve()
 
-    # s = Solution()
-    # s.solve()
+    s = Solution()
+    s.solve()
 
 
 if __name__ == '__main__':

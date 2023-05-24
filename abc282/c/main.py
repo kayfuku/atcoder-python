@@ -42,17 +42,17 @@ class Try:
     def solve(self):
         N = int(input())
         S = input()
-        ans = ''
+        ans = []
         cnt = 0
-        for i in range(N):
-            if S[i] == '"':
+        for c in S:
+            if c == '"':
                 cnt += 1
-            if S[i] == ',' and cnt % 2 == 0:
-                ans += '.'
+            if c == ',' and cnt % 2 == 0:
+                ans.append('.')
             else:
-                ans += S[i]
+                ans.append(c)
 
-        print(ans)
+        print(''.join(ans))
 
 
 def main():
